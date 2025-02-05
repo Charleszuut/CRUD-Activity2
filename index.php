@@ -77,7 +77,7 @@
               <p class="fw-bold textcol">
                 Status: 
                 <?php if ($row['status'] == 0): ?>
-                  <span class="status-badge status-ongoing">⏳ wala pa nahuman/span>
+                  <span class="status-badge status-ongoing">⏳ Ongoing/<span>
                 <?php else: ?>
                   <span class="status-badge status-done">✅ Done</span>
                 <?php endif; ?>
