@@ -8,8 +8,12 @@ try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql = 'SELECT * FROM fitness';
-    $stmt = $pdo->query($sql);
+    $sql = 'SELECT * FROM fitness WHERE user_id = :user_id';
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+    $stmt->execute();
+
 
     $fitnessData = $stmt->fetchAll(PDO::FETCH_ASSOC);
     echo "Fitness Tracking App";

@@ -1,4 +1,16 @@
-<?php include 'database/database.php'; $backgroundImage = "Pictures/gympic.jpg";?>
+<?php 
+session_start();
+include 'database/database.php'; 
+$backgroundImage = "Pictures/gympic.jpg";
+
+// Check if user is logged in
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+
+$user_id = $_SESSION['user_id']; // Get logged-in user ID
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -32,7 +44,7 @@
     .text-center {
       color: white;
     }
-    .textcol{
+    .textcol {
       color: white;
     }
     .status-badge {
@@ -57,27 +69,36 @@
     <div class="col-md-8">
       <div class="text-center mb-4">
         <h1 class="fw-bold">Fitness Tracker App</h1>
+        <form action="logout.php" method="post" class="mt-3">
+          <button type="submit" class="btn btn-danger btn-sm">Logout</button>
+        </form>
       </div>
+
       <div class="text-center mb-4">
         <a href="views/add_fitness.php" class="btn btn-outline-primary btn-custom px-4">➕ Add Exercise</a>
         <a href="views/all_exercises.php" class="btn btn-outline-success btn-custom px-4">📋 See Exercises</a>
       </div>
       
-      <?php $res = $conn->query("SELECT * FROM fitness"); ?>
-      
-      <?php if($res->num_rows > 0): ?>
-        <?php while($row = $res->fetch_assoc()): ?>
+      <?php 
+      $stmt = $conn->prepare("SELECT * FROM fitness WHERE user_id = ? ORDER BY created_at DESC");
+      $stmt->bind_param("i", $user_id);
+      $stmt->execute();
+      $res = $stmt->get_result();
+      ?>
+
+      <?php if ($res->num_rows > 0): ?>
+        <?php while ($row = $res->fetch_assoc()): ?>
           <div class="card card-custom mb-3">
             <div class="card-body">
-              <h4 class="card-title fw-bold textcol">🔹 <?= $row['ExerciseName']; ?></h4>
-              <p class="textcol">Description: <?= $row['description']; ?></p>
-              <p class="fw-bold textcol">Sets: <span class="text-secondary text-white"> <?= $row['sets']; ?> </span></p>
-              <p class="fw-bold textcol">Reps: <span class="text-secondary text-white"> <?= $row['reps']; ?> </span></p>
+              <h4 class="card-title fw-bold textcol">🔹 <?= htmlspecialchars($row['ExerciseName']); ?></h4>
+              <p class="textcol">Description: <?= htmlspecialchars($row['description']); ?></p>
+              <p class="fw-bold textcol">Sets: <span class="text-secondary text-white"> <?= (int) $row['sets']; ?> </span></p>
+              <p class="fw-bold textcol">Reps: <span class="text-secondary text-white"> <?= (int) $row['reps']; ?> </span></p>
               
               <p class="fw-bold textcol">
                 Status: 
                 <?php if ($row['status'] == 0): ?>
-                  <span class="status-badge status-ongoing">⏳ Ongoing/<span>
+                  <span class="status-badge status-ongoing">⏳ Ongoing</span>
                 <?php else: ?>
                   <span class="status-badge status-done">✅ Done</span>
                 <?php endif; ?>
@@ -86,8 +107,8 @@
               <p class="textcol">📅 Added on: <?= date("F j, Y, g:i A", strtotime($row['created_at'])); ?></p>
 
               <div class="d-flex gap-2">
-                <a href="views/update_fitness.php?ExerciseID=<?=$row['ExerciseID'];?>" class="btn btn-warning btn-sm btn-custom">✏️ Edit</a>
-                <a href="handlers/delete_fitness_handler.php?id=<?=$row['ExerciseID'];?>" class="btn btn-danger btn-sm btn-custom">🗑️ Delete</a>
+                <a href="views/update_fitness.php?ExerciseID=<?= $row['ExerciseID']; ?>" class="btn btn-warning btn-sm btn-custom">✏️ Edit</a>
+                <a href="handlers/delete_fitness_handler.php?id=<?= $row['ExerciseID']; ?>" class="btn btn-danger btn-sm btn-custom" onclick="return confirm('Are you sure you want to delete this exercise?');">🗑️ Delete</a>
               </div>
             </div>
           </div>
@@ -97,6 +118,8 @@
           <h5>🎉 No current exercises. Add one or enjoy your rest time!</h5>
         </div>
       <?php endif; ?>
+
+      <?php $stmt->close(); ?>
     </div>
   </div>
 </body>
