@@ -29,10 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     
-    <!-- Bootstrap CSS -->
     <link href="statics/css/bootstrap.min.css" rel="stylesheet">
-    
-    <!-- Google Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     
     <style>
@@ -84,7 +81,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <button type="submit" class="btn btn-primary w-100">Login</button>
                 </form>
                 
-                <!-- Register Button -->
                 <div class="text-center mt-3">
                     <a href="register.php" class="btn btn-outline-secondary">Register</a>
                 </div>

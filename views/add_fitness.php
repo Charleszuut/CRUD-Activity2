@@ -23,14 +23,13 @@
       position: relative;
     }
     
-    /* Dark overlay for better text readability */
     .overlay {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.6); /* Dark transparency */
+      background: rgba(0, 0, 0, 0.6);
       z-index: 1;
     }
 
@@ -60,7 +59,7 @@
 </head>
 
 <body>
-  <div class="overlay"></div> <!-- Dark overlay for better readability -->
+  <div class="overlay"></div>
 
   <div class="container d-flex justify-content-center align-items-center mt-5 content-container">
     <div class="col-6">

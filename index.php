@@ -3,13 +3,12 @@ session_start();
 include 'database/database.php'; 
 $backgroundImage = "Pictures/gympic.jpg";
 
-// Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
 
-$user_id = $_SESSION['user_id']; // Get logged-in user ID
+$user_id = $_SESSION['user_id'];
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +21,6 @@ $user_id = $_SESSION['user_id']; // Get logged-in user ID
 
   <link href="statics/css/bootstrap.min.css" rel="stylesheet">
   <script src="statics/js/bootstrap.js"></script>
-  <!-- Google Material Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
   <style>

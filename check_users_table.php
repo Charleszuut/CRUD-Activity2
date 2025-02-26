@@ -7,7 +7,6 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     echo "The 'users' table exists.<br>";
 
-    // Check the structure of the users table
     $sql = "DESCRIBE users";
     $result = $conn->query($sql);
 

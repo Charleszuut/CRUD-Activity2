@@ -6,7 +6,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = trim($_POST['username']);
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-    // Check if the username already exists
     $checkStmt = $conn->prepare("SELECT username FROM users WHERE username = ?");
     $checkStmt->bind_param("s", $username);
     $checkStmt->execute();
@@ -15,7 +14,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($checkStmt->num_rows > 0) {
         $error = "Username already exists! Please choose a different one.";
     } else {
-        // Insert new user into the database
         $stmt = $conn->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
         $stmt->bind_param("ss", $username, $password);
 

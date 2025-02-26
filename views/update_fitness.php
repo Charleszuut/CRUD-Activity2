@@ -44,7 +44,6 @@ try {
       position: relative;
     }
 
-    /* Dark overlay for better contrast */
     .overlay {
       position: absolute;
       top: 0;
@@ -84,7 +83,7 @@ try {
 </head>
 
 <body>
-  <div class="overlay"></div> <!-- Dark overlay for better readability -->
+  <div class="overlay"></div>
 
   <div class="container d-flex justify-content-center mt-5 content-container">
     <div class="col-md-6">

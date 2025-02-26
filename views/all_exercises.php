@@ -38,7 +38,6 @@ $result = $stmt->get_result();
       position: relative;
     }
 
-    /* Dark overlay for better contrast */
     .overlay {
       position: absolute;
       top: 0;
@@ -83,7 +82,7 @@ $result = $stmt->get_result();
 </head>
 
 <body>
-  <div class="overlay"></div> <!-- Dark overlay for better readability -->
+  <div class="overlay"></div>
 
   <div class="container mt-5 content-container">
     <div class="text-center mb-4">
